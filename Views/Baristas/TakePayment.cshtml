@@ -1,0 +1,108 @@
+﻿
+@using CofeeShop.Controllers
+@using CofeeShop.Models
+@using CofeeShop.DAL
+@model CofeeShop.ViewModel.OrderViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <title>TakePayment</title>
+</head>
+<body>
+    @if (TempData["msg"] != null)
+    {
+        <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+    }
+
+    <br />
+
+    <a href="@Url.Action("ShowAllOrders", "Baristas")">
+        <span> return to Baristas page</span>
+    </a>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Order Id</th>
+                <th>Item name </th>
+                <th> The client name</th>
+                <th>Vip Membership</th>
+                <th> The totoal price</th>
+                <th>have to pay</th>
+            </tr>
+            @foreach (Order ord in Model.orders)
+            {
+                <tr>
+
+                    <td>@ord.orderId</td>
+
+                    @{
+                        Dal dal = new Dal();
+                        List<Item> exist = (from x in dal.items where x.itemId.Equals(ord.itemId) select x).ToList<Item>();
+                        <td> @exist[0].name   </td>
+                    }
+
+
+
+                    @if (ord.userName.Contains("??"))
+                    {
+                        <td> guest </td>
+                    }
+                    else
+                    {
+                        <td>@ord.userName </td>
+                    }
+                    @{
+                        List<User> n = (from x in dal.users where x.userName.Equals(ord.userName) select x).ToList<User>();
+
+                        int ax = 0;
+                        if (ax >= 10)
+                        {
+                            if (ord.userName.Contains("??")) {
+
+                        <td> the guest got a free cup of cofee!</td>
+                        }
+                                                else
+                                                {
+                                                    < td > @ord.userName got a free cup of cofee! </ td >
+                                                                        }
+
+                                            }
+                                            else
+                                            {
+                                                <td>no prizes!!!</td>
+                            }
+
+
+                    }
+                    @{
+
+                        <td> @exist[0].price  </td>
+                    }
+                    <td> <button name="Payedd" value=@ord.orderId formaction=@Url.Action("Payed") formmethod="post"> Payed</button> </td>
+
+                </tr>
+            }
+        </table>
+    </form>
+
+</body>
+
+</html>
+

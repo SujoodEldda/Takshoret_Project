@@ -1,0 +1,59 @@
+﻿@using CofeeShop.Models
+@model CofeeShop.ViewModel.TableViewModel
+@using CofeeShop.Controllers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BookTable</title>
+</head>
+<body>
+
+    <form action="Register" method="post">
+
+
+
+        <h1>Book a Table</h1>
+        <label for="browser">number of seats you want:</label>
+
+        <input id="Text1" type="number" name="seatsNumber" required />
+
+        <br />
+
+        <label for="browser">The table Place is:</label>
+        <input type="radio" name="status" value="out">outside
+        <input type="radio" name="status" value="in">inside
+        <br />
+        <lable> table id:</lable>
+        <input id="Text1" type="number" name="tableId">
+        <br />
+        <button name="Check" formaction=@Url.Action("CheckTable") formmethod="post"> Chuck availability</button>
+        <br />
+        <label for="browser">list of the available tables:</label>
+        <select name="tableIdn">
+            @{
+                var o = Model.tables;
+                foreach (var n in o)
+                {
+                    <option>@n.tableId</option>
+                }
+            }
+        </select>
+
+
+        <br />
+        <input type="submit" value="Book this Table">
+        <br />
+
+    </form>
+    <a href="@Url.Action("HomePage", "User")">
+        <span>Home page</span>
+    </a>
+
+</body>

@@ -1,0 +1,52 @@
+﻿@using CofeeShop.Models
+@model CofeeShop.ViewModel.ItemViewModel
+@using CofeeShop.Controllers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hall Seats</title>
+</head>
+<body>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Price </th>
+                <th>Item Image </th>
+            </tr>
+            @foreach (Item item in Model.items)
+            {
+                <tr>
+                    <td>@item.name</td>
+                    <td>@item.price  </td>
+                    <td> <img src="@Url.Content(item.ImageUrl)" height="100" width="100" /></td>
+                </tr>
+            }
+        </table>
+    </form>
+    <br />
+    <form action="CreateOrde" method="post">
+        <input type="submit" value="Add to cart">
+    </form>
+    <a href="@Url.Action("HomePage", "User")">
+        <span>Home page</span>
+    </a>
+
+</body>
+</html>

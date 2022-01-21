@@ -1,0 +1,42 @@
+﻿@using CofeeShop.Models
+@model CofeeShop.ViewModel.ItemViewModel
+
+@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Item</title>
+</head>
+<body>
+    <form action="AddNewItem" method="post" enctype="multipart/form-data">
+        <h1> Add a new item </h1>
+        <br />
+        Item name   :<input id="Text1" type="text" name="name" required />
+        <br />
+       
+        Item price  :<input id="Text1" type="number" min="1" name="price" required />
+        <br />
+        Item description  :<input id="Text1" type="text" name="category" required />
+        <br />
+        Age limitation      :<input id="Text1" type="number" min="0" name="age" required />
+        <br />
+        Item image :<input id="Text1" type="file" name="image" required />
+        <br />
+        <input id="Submit1" type="submit" value="Add" />
+
+    </form>
+    <a href="@Url.Action("MangmentItems", "Admin")">
+        <span> return to admin page</span>
+    </a>
+</body>
+</html>
+
+@if (TempData["msg"] != null)
+{
+    <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+}

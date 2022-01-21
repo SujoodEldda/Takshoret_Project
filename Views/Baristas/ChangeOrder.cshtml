@@ -1,0 +1,47 @@
+﻿@using CofeeShop.Controllers
+@using CofeeShop.Models
+@using CofeeShop.DAL
+@model CofeeShop.ViewModel.OrderViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChangeOrder</title>
+</head>
+<body>
+    @if (TempData["msg"] != null)
+    {
+        <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+    }
+
+    <form action="Replace" method="post">
+        <h1>Change the order</h1>
+        <br />
+        Enter the new item name : <input id="Text1" name="namee" type="text" required />
+        <br />
+        
+        <input id="Submit1" type="submit" value="Change" />
+    </form>
+
+    <form action="ChangeTablePlace" method="post">
+        <h1>Change table's place</h1>
+        <br/>
+        change place:
+        <select id="Select1" name="statuss">
+            <option> </option>
+            <option value="out"> outside</option>
+            <option value="in"> inside</option>
+        </select>
+        <br />
+        <input id="Submit1" type="submit" value="Change" />
+    </form>
+    <a href="@Url.Action("ShowAllOrders", "Baristas")">
+        <span> return to Baristas page</span>
+    </a>
+</body>
+</html>

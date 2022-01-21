@@ -1,0 +1,39 @@
+﻿@using CofeeShop.Models
+@model CofeeShop.Models.Table
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChangeTableStatus</title>
+</head>
+<body>
+    @if (TempData["msg"] != null)
+    {
+        <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+    }
+
+    <form action="ChangeStatus" method="post">
+        <h1>Change table's status</h1>
+        <br />
+        table id : <input id="Text1" name="n" type="number" required />
+        <br />
+        change occupation:
+        <select id="Select1" name="status">
+            <option> </option>
+            <option value="out"> occupted</option>
+            <option value="in"> unoccupted</option>
+        </select>
+        <br />
+        <input id="Submit1" type="submit" value="Change" />
+    </form>
+    <a href="@Url.Action("ShowAllOrders", "Baristas")">
+        <span> return to Baristas page</span>
+    </a>
+</body>
+</html>
+

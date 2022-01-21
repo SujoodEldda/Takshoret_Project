@@ -1,0 +1,91 @@
+﻿@using CofeeShop.Controllers
+@using CofeeShop.Models
+@using CofeeShop.DAL
+@model CofeeShop.ViewModel.OrderViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowAllOrders</title>
+</head>
+<body>
+    @if (TempData["msg"] != null)
+    {
+        <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+    }
+
+    <br />
+    <a href="@Url.Action("SignOut", "User")">
+        <span style="color:red">Sign Out </span>
+    </a>
+    <br />
+    <br />
+    <a href="@Url.Action("TakePayment", "Baristas")">
+        <span>Take Payment</span>
+    </a>
+    <form action="ChangeTableStatus" method="post">
+        <input id="Submit1" type="submit" value="change the table status occupted or not" />
+    </form>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Order Id</th>
+                <th>Item name </th>
+                <th>Status(payed or not) </th>
+                <th> The client name</th>
+                <th>Change the order and table's place</th>
+                <th>Is ready</th>
+            </tr>
+            @foreach (Order ord in Model.orders)
+            {
+                <tr>
+
+                    <td>@ord.orderId</td>
+
+                    @{
+                        Dal dal = new Dal();
+                        List<Item> exist = (from x in dal.items where x.itemId.Equals(ord.itemId) select x).ToList<Item>();
+                        <td> @exist[0].name   </td>
+                    }
+
+
+                    @if (ord.isPayed == true)
+                    {
+                        <td> payed </td>
+                    }
+                    else
+                    {
+                        <td>not payed yet  </td>
+                    }
+                    @if (ord.userName.Contains("??"))
+                    {
+                        <td> guest </td>
+                    }
+                    else
+                    {
+                        <td>@ord.userName </td>
+                    }
+                    <td> <button name="ChangeOrder" value=@ord.orderId formaction=@Url.Action("ChangeOrder") formmethod="post"> Change</button> </td>
+                    <td> <button name="Redyy" value=@ord.orderId formaction=@Url.Action("Redy") formmethod="post"> Ready</button> </td>
+                </tr>
+            }
+        </table>
+    </form>
+</body>
+</html>

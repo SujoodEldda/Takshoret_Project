@@ -1,0 +1,121 @@
+﻿
+@using CofeeShop.Models
+@model CofeeShop.ViewModel.ItemViewModel
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <title>HomePage</title>
+</head>
+<body>
+    @if (TempData["msg"] != null)
+    {
+        <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+    }
+    <br />
+    <form method="post" action=@Url.Action("FilterItem", "User")>
+        Show only items with the decreased price :
+        <input type="submit" value="Filter">
+    </form>
+
+    <br />
+    <form method="post" action=@Url.Action("OrderItems", "User")>
+        <label for="browser">Order by:</label>
+        <select name="OrderBy">
+            <option name="Choice1">Price increase</option>
+            <option name="Choice2">Price decrease</option>
+            <option name="Choice3">Most popular</option>
+            <option name="Choice4">item of the day</option>
+            <option name="Choice5">Category</option>
+        </select>
+        <input type="submit" value="order" asp-controller="User" asp-action="OrderItems">
+    </form>
+    <form method="post" action=@Url.Action("SearchItem", "User")>
+        Search a item :
+        <input type="submit" value="Search">
+    </form>
+    
+
+    <br />
+    @{
+        if (Session["UserName"].ToString().Contains("??"))
+        {
+            <a href="@Url.Action("LoginUsers", "User")">
+                <span>Login page</span>
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action("SignOut", "User")">
+                <span style="color:red">Sign Out </span>
+            </a>
+        }
+    }
+
+    <br />
+    <a href="@Url.Action("Cart", "User")">
+        <span>Shopping cart</span>
+    </a>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th>Buy</th>
+                <th>Item Name</th>
+                <th>Description </th>
+                <th>Price </th>
+                <th>Allowed Age </th>
+                <th>Availability </th>
+                <th>Item Image </th>
+            </tr>
+            @foreach (Item item in Model.items)
+            {
+                <tr>
+                    <td> <button name="itemId" value=@item.itemId formaction=@Url.Action("Once") formmethod="post"> Buy</button></td>
+                    <td>@item.name</td>
+                    <td>@item.category </td>
+
+                    @if (item.prePrice != 0)
+                    {
+                        <td> @item.price   <s><br />@item.prePrice</s>  </td>
+                    }
+                    else
+                    {
+                        <td>@item.price  </td>
+                    }
+                    <td>@item.age+</td>
+
+                    @if (item.isAvailable == true)
+                    {
+                        <td> available </td>
+                    }
+                    else
+                    {
+                        <td>not available  </td>
+                    }
+                    <td> <img src="@Url.Content(item.ImageUrl)" height="100" width="100" /></td>
+                </tr>
+            }
+        </table>
+    </form>
+</body>
+</html>
+
+
+

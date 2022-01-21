@@ -1,0 +1,48 @@
+﻿@using CofeeShop.Models
+@model CofeeShop.ViewModel.ItemViewModel
+@using CofeeShop.Controllers;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddItemOfDay</title>
+</head>
+<body>
+    <form action="AddNewItemOfTheDay" method="post" enctype="multipart/form-data">
+        <h1> Add the name of the dish of the day </h1>
+        <br />
+        Item name   :<input id="Text1" type="text" name="dishoftheday" required />
+        <br />
+        the weather :
+        <select id="Select1" name="isRainy">
+            <option> </option>
+            <option value=true> rainy so closed today</option>
+            <option value=false> nice so were are opened today</option>
+        </select>
+        <br />
+        is there is a party today :
+        <select id="Select1" name="isParty">
+            <option> </option>
+            <option value=true> there is party so we are closed today</option>
+            <option value=false> we are opened today</option>
+        </select>
+        <br />
+        <input id="Submit1" type="submit" value="Add" />
+
+    </form>
+    <a href="@Url.Action("MangmentItems", "Admin")">
+        <span> return to admin page</span>
+    </a>
+</body>
+</html>
+
+@if (TempData["msg"] != null)
+{
+    <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+}

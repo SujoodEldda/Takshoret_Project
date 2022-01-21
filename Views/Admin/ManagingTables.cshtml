@@ -1,0 +1,57 @@
+﻿@using CofeeShop.Models
+@model CofeeShop.Models.Table
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManagingTables</title>
+</head>
+<body>
+    @if (TempData["msg"] != null)
+    {
+        <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+    }
+
+    <form action="AddTable" method="post">
+        <h1>Add a new Table</h1>
+        <br />
+        table id : <input id="Text2" name="n" type="number" required />
+        <br />
+        Number of seats : <input id="Text1" name="seatsNumber" type="number" required />
+        <br />
+        place : <select id="Select1" name="status">
+            <option> </option>
+            <option value="in"> inside</option>
+            <option value="out"> outside</option>
+
+        </select>
+        <br />
+        <input id="Submit1" type="submit" value="Add" />
+    </form>
+
+    <form action="UpdateTableSeatsAndPlace" method="post">
+        <h1>Change table's seats number and place</h1>
+        <br />
+        table id : <input id="Text1" name="n" type="number" required />
+        <br />
+        Number of seats (new) : <input id="Text1" name="seatsNumber" type="number" required />
+        <br />
+        change place:
+        <select id="Select1" name="status">
+            <option> </option>
+            <option value="out"> inside</option>
+            <option value="in"> outside</option>
+        </select>
+        <br />
+        <input id="Submit1" type="submit" value="Change" />
+    </form>
+    <a href="@Url.Action("MangmentItems", "Admin")">
+        <span> return to admin page</span>
+    </a>
+</body>
+</html>
